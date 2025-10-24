@@ -27,5 +27,6 @@ COPY --from=frontend-builder /frontend/dist/ ./frontend/dist/
 
 WORKDIR /app/backend
 
-# Start command
-CMD ["bash", "start.sh"]
+# Railway provides PORT env variable
+# Use shell form to allow environment variable expansion
+CMD uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
