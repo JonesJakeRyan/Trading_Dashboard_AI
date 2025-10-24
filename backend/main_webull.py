@@ -29,7 +29,14 @@ app = FastAPI(
 # CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://www.jonesdatasoftware.com",
+        "https://jonesdatasoftware.com",
+        "https://*.railway.app",
+        "*"  # Allow all for now, restrict later
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
