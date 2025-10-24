@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Sparkles, Loader2 } from 'lucide-react'
 import axios from 'axios'
+import { API_URL } from '../config'
 
 const AISuggestions = ({ metrics }) => {
   const [suggestions, setSuggestions] = useState('')
@@ -15,7 +16,7 @@ const AISuggestions = ({ metrics }) => {
         setIsLoading(true)
         setError(null)
         
-        const response = await axios.post('http://localhost:8003/api/ai-suggestions', {
+        const response = await axios.post(`${API_URL}/api/ai-suggestions`, {
           metrics: metrics
         })
         

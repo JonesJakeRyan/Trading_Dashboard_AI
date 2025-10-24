@@ -4,6 +4,7 @@ import axios from 'axios'
 import FileUpload from '../components/FileUpload'
 import { AlertCircle, CheckCircle, TrendingUp, DollarSign, Eye } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { API_URL } from '../config'
 
 const Upload = ({ setMetrics, setFileName }) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -24,12 +25,12 @@ const Upload = ({ setMetrics, setFileName }) => {
   }, [])
 
   const loadDemo = async () => {
-    setIsLoading(true)
-    setError(null)
+    setError('')
     setSuccess(false)
+    setIsLoading(true)
 
     try {
-      const response = await axios.get('http://localhost:8003/api/demo')
+      const response = await axios.get(`${API_URL}/api/demo`)
 
       if (response.data.success) {
         setMetrics(response.data.metrics)
@@ -58,7 +59,7 @@ const Upload = ({ setMetrics, setFileName }) => {
       const formData = new FormData()
       formData.append('file', file)
 
-      const response = await axios.post('http://localhost:8003/api/upload', formData, {
+      const response = await axios.post(`${API_URL}/api/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -105,7 +106,7 @@ const Upload = ({ setMetrics, setFileName }) => {
       if (stocksFile) formData.append('equities_file', stocksFile)
       if (optionsFile) formData.append('options_file', optionsFile)
 
-      const response = await axios.post('http://localhost:8003/api/upload/combined', formData, {
+      const response = await axios.post(`${API_URL}/api/upload/combined`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
