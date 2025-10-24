@@ -1,4 +1,3 @@
 // API Configuration
-// Use empty string for same-origin requests (single deployment)
-// or set VITE_API_URL for separate backend deployment
-export const API_URL = import.meta.env.VITE_API_URL || ''
+// Using split deployment: frontend on www.jonesdatasoftware.com, backend separate
+export const API_URL = import.meta.env.VITE_API_URL || 'https://backendtradingdashboardai-production.up.railway.app'
