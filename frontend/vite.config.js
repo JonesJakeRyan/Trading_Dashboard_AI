@@ -5,8 +5,13 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
-    host: true,
+    host: '0.0.0.0',
     strictPort: false,
+    allowedHosts: [
+      'www.jonesdatasoftware.com',
+      '.railway.app',
+      'localhost'
+    ],
     hmr: {
       clientPort: 443
     }
