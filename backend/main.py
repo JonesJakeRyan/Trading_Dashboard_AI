@@ -448,16 +448,16 @@ def parse_csv(content: str) -> pd.DataFrame:
         raise ValueError(f"Failed to parse CSV: {str(e)}")
 
 
-@app.get("/")
-async def root():
-    """Root endpoint"""
-    return {"status": "online", "service": "Trading Performance Dashboard API"}
-
-
 @app.get("/health")
 async def health_check():
     """Health check endpoint for Railway"""
     return {"status": "healthy", "service": "trading-dashboard-api"}
+
+
+@app.get("/api/status")
+async def api_status():
+    """API status endpoint"""
+    return {"status": "online", "service": "Trading Performance Dashboard API"}
 
 
 @app.post("/api/upload")
