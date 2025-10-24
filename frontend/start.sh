@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Start script for Railway deployment - Frontend
 # Railway sets PORT environment variable
 
