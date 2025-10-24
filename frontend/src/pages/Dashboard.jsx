@@ -27,15 +27,26 @@ const Dashboard = ({ metrics, fileName }) => {
   useEffect(() => {
     if (!metrics) {
       console.log('No metrics found, redirecting to upload page')
-      navigate('/')
+      // Use replace to avoid adding to history
+      navigate('/', { replace: true })
     }
   }, [metrics, navigate])
 
   if (!metrics) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
-          <p className="text-text-secondary">Redirecting to upload page...</p>
+          <div className="mb-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          </div>
+          <p className="text-text text-lg">No data available</p>
+          <p className="text-text-dark mt-2">Redirecting to upload page...</p>
+          <button 
+            onClick={() => navigate('/')}
+            className="mt-4 px-6 py-2 bg-primary text-background rounded-lg hover:bg-primary-light transition-colors"
+          >
+            Go to Upload Page
+          </button>
         </div>
       </div>
     )
