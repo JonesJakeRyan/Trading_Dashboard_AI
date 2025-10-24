@@ -531,6 +531,59 @@ async def filter_trades(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.get("/api/demo")
+async def get_demo():
+    """
+    Get demo metrics from pre-loaded sample CSV.
+    This endpoint serves as a demonstration of the dashboard.
+    """
+    try:
+        import os
+        logger.info("Demo endpoint called")
+        
+        # Try to find the demo CSV
+        csv_path = os.path.join(os.path.dirname(__file__), 'Webull_Orders_Records.csv')
+        if not os.path.exists(csv_path):
+            # Try parent directory
+            csv_path = os.path.join(os.path.dirname(__file__), '..', 'Webull_Orders_Records.csv')
+        
+        if not os.path.exists(csv_path):
+            logger.error(f"Demo CSV not found at {csv_path}")
+            raise HTTPException(status_code=404, detail="Demo data file not found")
+        
+        # Read and process the CSV
+        with open(csv_path, 'r') as f:
+            content_str = f.read()
+        
+        df = parse_csv(content_str)
+        
+        if len(df) == 0:
+            raise HTTPException(status_code=500, detail="No valid trades found in demo data")
+        
+        # Analyze trades
+        analyzer = TradeAnalyzer(df)
+        metrics = analyzer.calculate_all_metrics()
+        
+        # Sanitize metrics to ensure JSON compliance
+        metrics = sanitize_for_json(metrics)
+        
+        logger.info(f"Successfully analyzed {len(df)} demo trades")
+        
+        return JSONResponse(content={
+            "success": True,
+            "is_demo": True,
+            "demo_account": "Sample Trading Account",
+            "total_rows": len(df),
+            "metrics": metrics
+        })
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error in demo endpoint: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to load demo data: {str(e)}")
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
