@@ -22,9 +22,19 @@ def get_demo_metrics(starting_equity: float = 10000.0, ytd_only: bool = True):
         Dict with metrics and metadata
     """
     try:
-        # Load the demo CSV (from parent directory)
+        # Load the demo CSV (try multiple locations)
         import os
-        csv_path = os.path.join(os.path.dirname(__file__), '..', 'Webull_Orders_Records.csv')
+        
+        # Try backend directory first (Railway deployment)
+        csv_path = os.path.join(os.path.dirname(__file__), 'Webull_Orders_Records.csv')
+        if not os.path.exists(csv_path):
+            # Try parent directory (local development)
+            csv_path = os.path.join(os.path.dirname(__file__), '..', 'Webull_Orders_Records.csv')
+        
+        if not os.path.exists(csv_path):
+            logger.error(f"Demo CSV not found at {csv_path}")
+            return None
+            
         with open(csv_path, 'r') as f:
             equities_csv = f.read()
         
