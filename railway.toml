@@ -1,3 +1,11 @@
-# Railway Configuration - Root level (not used, deploy from /backend and /frontend)
-# This file is here for reference only
-# Deploy backend and frontend as separate services with their respective root directories
+# Railway Configuration - Single Unified Deployment
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "bash backend/start.sh"
+healthcheckPath = "/health"
+healthcheckTimeout = 100
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10

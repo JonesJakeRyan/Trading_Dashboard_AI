@@ -1,12 +1,15 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 import pandas as pd
 import numpy as np
 from io import StringIO
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 import logging
+import os
+from pathlib import Path
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -22,6 +25,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Determine paths
+BASE_DIR = Path(__file__).resolve().parent
+FRONTEND_BUILD_DIR = BASE_DIR.parent / "frontend" / "dist"
+
+# Mount static files if frontend build exists
+if FRONTEND_BUILD_DIR.exists():
+    app.mount("/assets", StaticFiles(directory=FRONTEND_BUILD_DIR / "assets"), name="assets")
+    logger.info(f"Serving frontend from {FRONTEND_BUILD_DIR}")
 
 
 class TradeAnalyzer:
@@ -588,6 +600,22 @@ async def get_demo():
     except Exception as e:
         logger.error(f"Error in demo endpoint: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to load demo data: {str(e)}")
+
+
+@app.get("/{full_path:path}")
+async def serve_frontend(full_path: str):
+    """
+    Catch-all route to serve React frontend for client-side routing.
+    This should be the last route defined.
+    """
+    if FRONTEND_BUILD_DIR.exists():
+        # Serve index.html for all non-API routes
+        index_path = FRONTEND_BUILD_DIR / "index.html"
+        if index_path.exists():
+            return FileResponse(index_path)
+    
+    # If no frontend build, return 404
+    raise HTTPException(status_code=404, detail="Frontend not built")
 
 
 if __name__ == "__main__":
