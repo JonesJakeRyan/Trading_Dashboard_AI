@@ -438,8 +438,14 @@ def parse_csv(content: str) -> pd.DataFrame:
 
 @app.get("/")
 async def root():
-    """Health check endpoint"""
+    """Root endpoint"""
     return {"status": "online", "service": "Trading Performance Dashboard API"}
+
+
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for Railway"""
+    return {"status": "healthy", "service": "trading-dashboard-api"}
 
 
 @app.post("/api/upload")
