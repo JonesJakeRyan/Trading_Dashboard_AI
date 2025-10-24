@@ -75,15 +75,20 @@ async def get_demo():
     This endpoint serves as a demonstration of the dashboard.
     """
     try:
+        logger.info("Demo endpoint called")
         demo_data = get_demo_metrics(starting_equity=10000.0, ytd_only=True)
         
         if demo_data is None:
+            logger.error("get_demo_metrics returned None")
             raise HTTPException(status_code=500, detail="Failed to load demo data")
         
+        logger.info("Demo data generated successfully")
         return JSONResponse(content=demo_data)
         
+    except HTTPException:
+        raise
     except Exception as e:
-        logger.error(f"Error in demo endpoint: {e}")
+        logger.error(f"Error in demo endpoint: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
 
