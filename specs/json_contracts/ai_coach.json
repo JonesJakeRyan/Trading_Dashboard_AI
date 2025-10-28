@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "summary": {
+      "type": "string",
+      "description": "A brief summary of the AI insights."
+    },
+    "pattern_insights": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "evidence_metric": { "type": "string" },
+          "why_it_matters": { "type": "string" }
+        },
+        "required": ["title", "evidence_metric", "why_it_matters"]
+      }
+    },
+    "risk_notes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "trigger_condition": { "type": "string" },
+          "mitigation_tip": { "type": "string" }
+        },
+        "required": ["title", "trigger_condition", "mitigation_tip"]
+      }
+    },
+    "top_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "priority": { "type": "integer" },
+          "action": { "type": "string" }
+        },
+        "required": ["priority", "action"]
+      }
+    }
+  },
+  "required": ["summary", "pattern_insights", "risk_notes", "top_actions"]
+}
