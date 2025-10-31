@@ -25,8 +25,12 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 # Copy nginx configuration from builder stage
 COPY --from=builder /app/nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port (Railway will set $PORT)
+# Copy startup script
+COPY --from=builder /app/start-nginx.sh /start-nginx.sh
+RUN chmod +x /start-nginx.sh
+
+# Expose port (Railway will set $PORT dynamically)
 EXPOSE 80
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start nginx with dynamic port
+CMD ["/start-nginx.sh"]

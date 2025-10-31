@@ -5,6 +5,7 @@ import MetricsHeader from '../components/MetricsHeader';
 import TimeframeSelector from '../components/TimeframeSelector';
 import PLChart from '../charts/PLChart';
 import AICoachPanel from '../components/AICoachPanel';
+import config from '../config';
 
 export type Timeframe = 'ALL' | 'YTD' | '6M' | '3M' | '1M' | '1W';
 
@@ -47,8 +48,9 @@ export default function Dashboard() {
     setError(null);
 
     try {
-      const metricsEndpoint = isDemo ? '/api/demo/metrics' : '/api/v1/metrics';
-      const chartEndpoint = isDemo ? '/api/demo/chart' : '/api/v1/chart';
+      const apiBase = config.apiUrl || '';
+      const metricsEndpoint = isDemo ? `${apiBase}/api/demo/metrics` : `${apiBase}/api/v1/metrics`;
+      const chartEndpoint = isDemo ? `${apiBase}/api/demo/chart` : `${apiBase}/api/v1/chart`;
       const params = new URLSearchParams({ timeframe });
       if (jobId && !isDemo) params.append('job_id', jobId);
 
