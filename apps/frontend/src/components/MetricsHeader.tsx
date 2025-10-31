@@ -30,11 +30,11 @@ function MetricCard({ label, value, format = 'number', delay = 0, colorize = fal
 
   useEffect(() => {
     if (format === 'text' || typeof value === 'string') {
-      setDisplayText(value.toString());
+      setDisplayText(value?.toString() || 'N/A');
       return;
     }
 
-    const numValue = typeof value === 'number' ? value : parseFloat(value as string);
+    const numValue = typeof value === 'number' ? value : (value ? parseFloat(value as string) : 0);
     
     const controls = animate(motionValue, numValue, {
       duration: 1.5,
