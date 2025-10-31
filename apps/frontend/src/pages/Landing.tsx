@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import config from '../config';
 
 type BrokerTemplate = 'webull_v1' | 'robinhood_v1' | 'unified_v1';
 
@@ -32,7 +33,8 @@ export default function Landing() {
     formData.append('template_id', selectedTemplate);
 
     try {
-      const response = await fetch('/api/ingest', {
+      const apiBase = config.apiUrl || '';
+      const response = await fetch(`${apiBase}/api/v1/ingest`, {
         method: 'POST',
         body: formData,
       });
