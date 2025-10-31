@@ -81,6 +81,7 @@ async def get_metrics(
             return filtered_pnl
         
         return {
+            "cumulative_pnl": float(aggregate.total_realized_pnl),
             "total_realized_pnl": float(aggregate.total_realized_pnl),
             "total_lots_closed": aggregate.total_lots_closed,
             "total_trades": aggregate.total_trades,
@@ -90,6 +91,8 @@ async def get_metrics(
             "total_losses": float(aggregate.total_losses),
             "win_rate": float(aggregate.win_rate) if aggregate.win_rate else 0,
             "profit_factor": float(aggregate.profit_factor) if aggregate.profit_factor else 0,
+            "avg_gain": float(aggregate.average_gain) if aggregate.average_gain else 0,
+            "avg_loss": float(aggregate.average_loss) if aggregate.average_loss else 0,
             "average_gain": float(aggregate.average_gain) if aggregate.average_gain else 0,
             "average_loss": float(aggregate.average_loss) if aggregate.average_loss else 0,
             "best_symbol": aggregate.best_symbol,
