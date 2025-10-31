@@ -4,14 +4,14 @@ FROM node:20-alpine AS builder
 # Set working directory
 WORKDIR /app
 
-# Copy package files (build context is repo root)
-COPY ./apps/frontend/package*.json ./
+# Copy package files
+COPY package*.json ./
 
 # Install dependencies
 RUN npm ci
 
-# Copy source code (including nginx.conf)
-COPY ./apps/frontend/ ./
+# Copy all source code
+COPY . .
 
 # Build the app
 RUN npm run build
