@@ -61,7 +61,13 @@ export default function Dashboard() {
       ]);
 
       if (!metricsResponse.ok || !chartResponse.ok) {
-        throw new Error('Failed to fetch dashboard data');
+        const errorText = await metricsResponse.text();
+        console.error('API Error:', { 
+          status: metricsResponse.status, 
+          url: metricsEndpoint,
+          response: errorText.substring(0, 200)
+        });
+        throw new Error(`Failed to fetch dashboard data: ${metricsResponse.status}`);
       }
 
       const metricsResult = await metricsResponse.json();
