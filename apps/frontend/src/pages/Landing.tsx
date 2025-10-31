@@ -34,7 +34,7 @@ export default function Landing() {
 
     try {
       const apiBase = config.apiUrl || '';
-      const response = await fetch(`${apiBase}/api/v1/ingest`, {
+      const response = await fetch(`${apiBase}/api/v1/ingest/`, {
         method: 'POST',
         body: formData,
       });
