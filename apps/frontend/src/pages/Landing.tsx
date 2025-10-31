@@ -30,7 +30,7 @@ export default function Landing() {
 
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('template_id', selectedTemplate);
+    formData.append('template', selectedTemplate);
 
     try {
       const apiBase = config.apiUrl || '';
