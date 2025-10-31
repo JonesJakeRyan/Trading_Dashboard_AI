@@ -36,7 +36,7 @@ export default function Dashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [benchmarksEnabled, setBenchmarksEnabled] = useState<string[]>([]);
+  // const [benchmarksEnabled, setBenchmarksEnabled] = useState<string[]>([]); // Reserved for future benchmark feature
 
   useEffect(() => {
     fetchDashboardData();
@@ -77,13 +77,14 @@ export default function Dashboard() {
     }
   };
 
-  const toggleBenchmark = (symbol: string) => {
-    setBenchmarksEnabled((prev) =>
-      prev.includes(symbol)
-        ? prev.filter((s) => s !== symbol)
-        : [...prev, symbol]
-    );
-  };
+  // Benchmark toggle function - reserved for future use
+  // const toggleBenchmark = (symbol: string) => {
+  //   setBenchmarksEnabled((prev) =>
+  //     prev.includes(symbol)
+  //       ? prev.filter((s) => s !== symbol)
+  //       : [...prev, symbol]
+  //   );
+  // };
 
   if (loading) {
     return (
@@ -179,7 +180,7 @@ export default function Dashboard() {
           </div>
           <PLChart
             data={data.chart_data}
-            benchmarks={benchmarksEnabled}
+            benchmarks={[]} // Benchmarks feature reserved for future implementation
             timeframe={timeframe}
           />
         </motion.section>
