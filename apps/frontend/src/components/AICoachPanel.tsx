@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TypedText from '../animations/TypedText';
 import type { Timeframe } from '../pages/Dashboard';
+import config from '../config';
 
 interface AICoachPanelProps {
   jobId: string | null;
@@ -43,7 +44,8 @@ export default function AICoachPanel({ jobId, isDemo, timeframe }: AICoachPanelP
     setShowContent(false);
 
     try {
-      const endpoint = isDemo ? '/api/demo/ai/coach' : '/api/v1/ai/coach';
+      const apiBase = config.apiUrl || '';
+      const endpoint = isDemo ? `${apiBase}/api/demo/ai/coach` : `${apiBase}/api/v1/ai/coach`;
       const params = new URLSearchParams({ timeframe });
       if (jobId && !isDemo) params.append('job_id', jobId);
 
