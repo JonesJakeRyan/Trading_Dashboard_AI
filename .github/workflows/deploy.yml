@@ -25,5 +25,6 @@ jobs:
         run: |
           echo "Waiting for deployment to be ready..."
           sleep 30
-          # Add your Railway URL here after first deployment
-          # curl -f https://your-service.railway.app/health || exit 1
+          # TODO: After first deployment, uncomment and add your Railway URL:
+          # curl -f https://YOUR-SERVICE-NAME.up.railway.app/health || exit 1
+          echo "Health check skipped - add Railway URL after first deploy"
