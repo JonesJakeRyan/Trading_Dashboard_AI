@@ -10,7 +10,7 @@ COPY apps/frontend/package*.json ./
 # Install dependencies
 RUN npm ci
 
-# Copy source code
+# Copy source code (including nginx.conf)
 COPY apps/frontend/ ./
 
 # Build the app
@@ -22,8 +22,8 @@ FROM nginx:alpine
 # Copy built assets from builder
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy nginx configuration
-COPY apps/frontend/nginx.conf /etc/nginx/conf.d/default.conf
+# Copy nginx configuration from builder stage
+COPY --from=builder /app/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port (Railway will set $PORT)
 EXPOSE 80
