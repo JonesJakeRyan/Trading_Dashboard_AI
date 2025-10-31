@@ -43,16 +43,16 @@ async def get_demo_metrics(
         # Transform to match frontend expectations
         return {
             "metrics": {
-                "cumulative_pnl": result.get("total_realized_pnl", 0),
-                "total_trades": result.get("total_trades", 0),
-                "win_rate": result.get("win_rate", 0),
-                "avg_gain": result.get("average_gain", 0),
-                "avg_loss": result.get("average_loss", 0),
-                "profit_factor": result.get("profit_factor", 0),
-                "best_symbol": result.get("best_symbol", "N/A"),
-                "worst_symbol": result.get("worst_symbol", "N/A"),
-                "best_weekday": result.get("best_weekday", "N/A"),
-                "worst_weekday": result.get("worst_weekday", "N/A"),
+                "cumulative_pnl": result.get("total_realized_pnl") or 0,
+                "total_trades": result.get("total_trades") or 0,
+                "win_rate": result.get("win_rate") or 0,
+                "avg_gain": result.get("average_gain") or 0,
+                "avg_loss": result.get("average_loss") or 0,
+                "profit_factor": result.get("profit_factor") or 0,
+                "best_symbol": result.get("best_symbol") or "N/A",
+                "worst_symbol": result.get("worst_symbol") or "N/A",
+                "best_weekday": result.get("best_weekday") or "N/A",
+                "worst_weekday": result.get("worst_weekday") or "N/A",
             },
             "chart_data": []  # Will be fetched separately
         }
