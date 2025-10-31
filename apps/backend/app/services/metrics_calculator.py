@@ -162,10 +162,12 @@ class MetricsCalculator:
         avg_gain = None
         if winning_lots:
             avg_gain = total_gains / Decimal(len(winning_lots))
+            logger.info(f"Average gain calculated: ${avg_gain} from {len(winning_lots)} winning lots")
         
         avg_loss = None
         if losing_lots:
             avg_loss = total_losses / Decimal(len(losing_lots))
+            logger.info(f"Average loss calculated: ${avg_loss} from {len(losing_lots)} losing lots")
         
         # Best/Worst symbol
         symbol_pnl: Dict[str, Decimal] = defaultdict(Decimal)
