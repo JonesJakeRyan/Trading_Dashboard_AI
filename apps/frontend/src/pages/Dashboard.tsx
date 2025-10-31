@@ -74,10 +74,14 @@ export default function Dashboard() {
       const chartResult = await chartResponse.json();
 
       // Combine results
-      setData({
+      const combinedData = {
         metrics: metricsResult.metrics || metricsResult,
         chart_data: chartResult.data || []
-      });
+      };
+      console.log('Dashboard data received:', combinedData);
+      console.log('avg_gain:', combinedData.metrics.avg_gain);
+      console.log('cumulative_pnl:', combinedData.metrics.cumulative_pnl);
+      setData(combinedData);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load data');
     } finally {
